@@ -1,0 +1,53 @@
+.drobdownContainer {
+  position: relative;
+  background: var(--drobdwon-background);
+  color: var(--black);
+  width: fit-content;
+  min-width: 250px;
+  border-radius: 0;
+  border: 1px solid var(--drobdwon-border-color);
+  cursor: pointer;
+  margin-left: 1rem;
+  min-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drobdown {
+  position: absolute;
+  display: none;
+  background: var(--drobdwon-background);
+  overflow: auto;
+  max-height: 200px;
+  width: calc(100% + 2px);
+  left: -1px;
+  top: 25px;
+  border-left: var(--border-size) solid var(--dark-white);
+  border-right: var(--border-size) solid var(--dark-white);
+  border-bottom: var(--border-size) solid var(--dark-white);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  list-style: none;
+  padding: 0;
+}
+
+.drobdownItem {
+  padding: 0.5em 1em;
+  background: var(--drobdwon-background);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.drobdownItem:hover {
+  background: var(--drobdwon-border-color);
+}
+
+.drobdownContainer.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.drobdownContainer.active ul {
+  display: block;
+}

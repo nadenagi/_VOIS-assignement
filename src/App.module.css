@@ -1,0 +1,239 @@
+:root {
+  --main-body: #dddddd;
+  --black: #000;
+  --header-text-color: #9167ae;
+  --text-color: #ffffff;
+  --border-color: #cccccc;
+  --base-font: 15px;
+  --larger-font: 18px;
+  --color-ballet-1: #fb6371;
+  --color-ballet-2: #9342da;
+  --color-ballet-3: #9342da;
+  --color-ballet-4: #9342da;
+  --color-ballet-5: #9342da;
+  --color-ballet-6: #9342da;
+  --color-ballet-7: #9342da;
+  --color-ballet-8: #9342da;
+  --color-ballet-9: #9342da;
+  --dimmed-color: #0706067a;
+  --drobdwon-background: #8dd1fa;
+  --drobdwon-border-color: #2a9ed7;
+}
+
+body {
+  background: var(--main-body);
+}
+
+.App {
+  width: calc(100% - 4rem);
+  margin: 0 auto;
+}
+
+h1,
+h3 {
+  color: var(--header-text-color);
+}
+
+.drobdownsContainer{
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.drobdownWrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartContainer {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  background: var(--text-color);
+  display: flex;
+  align-items: stretch;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.lineChart {
+  width: 80% !important;
+  height: 100% !important;
+}
+
+.sideData {
+  padding: 3rem;
+  border-left: 0.5px solid var(--border-color);
+  width: 20%;
+}
+
+.totalLessons {
+  margin-bottom: 2rem;
+}
+
+.totalLessons,
+.lesson {
+  font-size: var(--base-font);
+}
+
+.totalLessons span,
+.lesson span {
+  font-weight: bold;
+  font-size: 18px;
+  display: inline-block;
+  padding: 0 5px 0px 0;
+}
+
+.lessonsContainer {
+  overflow: auto;
+}
+
+.lesson {
+  position: relative;
+  margin-left: 30px;
+  color: var(--dimmed-color);
+  margin-bottom: 1rem;
+}
+
+.lesson:before {
+  content: "";
+  position: absolute;
+  background: var(--text-color);
+  border: 1px solid var(--dimmed-color);
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  left: -30px;
+  top: 10px;
+}
+
+.lesson:after {
+  content: "";
+  position: absolute;
+  background: var(--dimmed-color);
+  border: 1px solid var(--dimmed-color);
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  left: -25px;
+  top: 15px;
+}
+
+.lesson:nth-of-type(1).active {
+  color: var(--color-ballet-1);
+}
+
+.lesson:nth-of-type(1).active:before {
+  border: 1px solid var(--color-ballet-1);
+}
+
+.lesson:nth-of-type(1).active:after {
+  background: var(--color-ballet-1);
+  border: 1px solid var(--color-ballet-1);
+}
+
+.lesson:nth-of-type(2).active {
+  color: var(--color-ballet-2);
+}
+
+.lesson:nth-of-type(2).active:before {
+  border: 1px solid var(--color-ballet-2);
+}
+
+.lesson:nth-of-type(2).active:after {
+  background: var(--color-ballet-2);
+  border: 1px solid var(--color-ballet-2);
+}
+
+.lesson:nth-of-type(3).active {
+  color: var(--color-ballet-3);
+}
+
+.lesson:nth-of-type(3).active:before {
+  border: 1px solid var(--color-ballet-3);
+}
+
+.lesson:nth-of-type(3).active:after {
+  background: var(--color-ballet-3);
+  border: 1px solid var(--color-ballet-3);
+}
+
+.lesson:nth-of-type(4).active {
+  color: var(--color-ballet-4);
+}
+
+.lesson:nth-of-type(4).active:before {
+  border: 1px solid var(--color-ballet-4);
+}
+
+.lesson:nth-of-type(4).active:after {
+  background: var(--color-ballet-4);
+  border: 1px solid var(--color-ballet-4);
+}
+
+.lesson:nth-of-type(5).active {
+  color: var(--color-ballet-5);
+}
+
+.lesson:nth-of-type(5).active:before {
+  border: 1px solid var(--color-ballet-5);
+}
+
+.lesson:nth-of-type(5).active:after {
+  background: var(--color-ballet-5);
+  border: 1px solid var(--color-ballet-5);
+}
+
+.lesson:nth-of-type(6).active {
+  color: var(--color-ballet-6);
+}
+
+.lesson:nth-of-type(6).active:before {
+  border: 1px solid var(--color-ballet-6);
+}
+
+.lesson:nth-of-type(6).active:after {
+  background: var(--color-ballet-6);
+  border: 1px solid var(--color-ballet-6);
+}
+
+.lesson:nth-of-type(7).active {
+  color: var(--color-ballet-7);
+}
+
+.lesson:nth-of-type(7).active:before {
+  border: 1px solid var(--color-ballet-7);
+}
+
+.lesson:nth-of-type(7).active:after {
+  background: var(--color-ballet-7);
+  border: 1px solid var(--color-ballet-7);
+}
+
+.lesson:nth-of-type(8).active {
+  color: var(--color-ballet-1);
+}
+
+.lesson:nth-of-type(8).active:before {
+  border: 1px solid var(--color-ballet-8);
+}
+
+.lesson:nth-of-type(8).active:after {
+  background: var(--color-ballet-8);
+  border: 1px solid var(--color-ballet-8);
+}
+
+.lesson:nth-of-type(9).active {
+  color: var(--color-ballet-9);
+}
+
+.lesson:nth-of-type(9).active:before {
+  border: 1px solid var(--color-ballet-9);
+}
+
+.lesson:nth-of-type(9).active:after {
+  background: var(--color-ballet-9);
+  border: 1px solid var(--color-ballet-9);
+}
