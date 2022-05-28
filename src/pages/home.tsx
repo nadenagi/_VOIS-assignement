@@ -138,6 +138,7 @@ function Home() {
       countries: countriesList,
       camps: campsList,
       schools: schoolsList,
+      selectedSchool: "show all",
     });
   };
 
