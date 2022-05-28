@@ -1,5 +1,5 @@
 import { fetchChartData } from "../actions/initialDataSetting";
-import { INITIALDATA } from '../types/chart';
+import { BEFOREINITIALDATA,INITIALDATA } from '../types/chart';
 
 export const initialState = {
   data: [],
@@ -15,6 +15,7 @@ export const dataFetchedReducer = (state = initialState, action = fetchChartData
         isLoading: action.isLoading,
         error: action.error,
       };
+
     default:
       return state;
   }

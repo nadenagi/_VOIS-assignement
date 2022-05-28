@@ -16,12 +16,12 @@ export const dropdownReducer = (state = initialState, action = initFilter) => {
         error: action.error,
       };
     
-    case UPDATEDDATA:
+    case UPDATEDDATA:{console.log(action)
       return {
         data: action.data,
         isLoading: action.isLoading,
         error: action.error,
-      };
+      };}
     
     default:
       return state;

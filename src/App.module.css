@@ -34,6 +34,15 @@ h3 {
   color: var(--header-text-color);
 }
 
+.loading{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--text-color);
+}
+
 .drobdownsContainer{
   width: 100%;
   display: flex;

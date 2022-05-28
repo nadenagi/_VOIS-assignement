@@ -88,29 +88,13 @@ export const dumbChartData = {
 function Home() {
   const dispatch = useDispatch();
   const data = useSelector((state: any) => state.dataFetched.data);
+  const isLoading = useSelector((state: any) => state.dataFetched.isLoading);
   const filters = useSelector((state: any) => state.filters.data);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedCamp, setSelectedCamp] = useState("");
-  const [selectedSchool, setSelectedSchool] = useState("");
-  const [countriesFilter, setCountriesFilter] = useState<any>();
-  const [campsFilter, setCampsFilter] = useState<any>();
-  const [schoolsFilter, setSchoolsFilter] = useState<any>();
-  const [totalLessons, setTotalLessons] = useState(0);
-  const [filteredData, setFilteredData] = useState<any[]>([]);
-  const [lineChartSelectedSchools, setLineChartSelectedSchools] = useState<
-    any[]
-  >([]);
   const [chartData, setChartData] = useState(dumbChartData);
-  const [selectedPoint, setSelectedPoint] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("filters", filters);
-    if (data?.length) {
-      setStaticData();
-    } else {
-      getData();
-    }
+    data?.length ? setStaticData() : getData();
   }, [data]);
 
   const getData = async () => {
@@ -123,7 +107,7 @@ function Home() {
       .get(url)
       .then((res: any) => {
         if (res?.data) {
-          dispatchValues(INITIALDATA, res.data);
+          dispatchValues(INITIALDATA, res.data,false);
         }
       })
       .catch((err: any) => {
@@ -149,11 +133,8 @@ function Home() {
 
     schoolsList.push("show all");
 
-    setCountriesFilter(countriesList);
-    setCampsFilter(campsList);
-    setSchoolsFilter(schoolsList);
-
     dispatchValues(UPDATEDDATA, {
+      ...filters,
       countries: countriesList,
       camps: campsList,
       schools: schoolsList,
@@ -169,33 +150,37 @@ function Home() {
     dispatch({ type, data, isLoading, error });
   }
 
-  useEffect(() => {
-    updateDataset();
-  }, [selectedCountry, selectedCamp, selectedSchool]);
+  useEffect(() => updateDataset(), [
+    filters?.selectedCountry,
+    filters?.selectedCamp,
+    filters?.selectedSchool,
+  ]);
 
   const updateDataset = () => {
     const countriesList = [
       ...new Set<any>(
         data?.filter((item: any) =>
-          selectedCountry === "show all"
+          filters?.selectedCountry === "show all"
             ? item.country
-            : item.country === selectedCountry
+            : item.country === filters?.selectedCountry
         )
       ),
     ];
     const campsList = [
       ...new Set<any>(
         data?.filter((item: any) =>
-          selectedCamp === "show all" ? item.camp : item.camp === selectedCamp
+          filters?.selectedCamp === "show all"
+            ? item.camp
+            : item.camp === filters?.selectedCamp
         )
       ),
     ];
     const schoolsList = [
       ...new Set<any>(
         data?.filter((item: any) =>
-          selectedSchool === "show all"
+          filters?.selectedSchool === "show all"
             ? item.school
-            : item.school === selectedSchool
+            : item.school === filters?.selectedSchool
         )
       ),
     ];
@@ -238,13 +223,12 @@ function Home() {
 
     let totalLessons = 0;
     filtered.forEach((item) => (totalLessons += item.lessons));
-    setTotalLessons(totalLessons);
-    setLineChartSelectedSchools([]);
 
-    
     dispatchValues(UPDATEDDATA, {
       ...filters,
-      points: finalData
+      points: finalData,
+      selectedPoints: [],
+      totalLessons,
     });
   };
 
@@ -259,24 +243,32 @@ function Home() {
     root.style.setProperty(`--color-ballet-${index + 1}`, rgb);
     data.rgb = rgb;
     if (
-      lineChartSelectedSchools.some((element) => element.school === data.school)
+      filters?.selectedPoints.some(
+        (element: any) => element.school === data.school
+      )
     ) {
-      let dataFiltered = lineChartSelectedSchools.filter(
-        (element) => element.school !== data.school
+      let dataFiltered = filters?.selectedPoints.filter(
+        (element: any) => element.school !== data.school
       );
       data.active = false;
-      setLineChartSelectedSchools(dataFiltered);
+
+      dispatchValues(UPDATEDDATA, {
+        ...filters,
+        selectedPoints: dataFiltered,
+      });
     } else {
       data.active = true;
       data.color = rgb;
-      setLineChartSelectedSchools((prevState) => {
-        return [...prevState, data];
+
+      dispatchValues(UPDATEDDATA, {
+        ...filters,
+        selectedPoints: [...filters?.selectedPoints, data],
       });
     }
   };
 
   useEffect(() => {
-    let dataset = lineChartSelectedSchools?.map((item) => {
+    let dataset = filters?.selectedPoints?.map((item: any) => {
       return {
         label: item.school,
         data: item.data,
@@ -289,21 +281,27 @@ function Home() {
       };
     });
     setChartData({ labels, datasets: dataset });
-  }, [lineChartSelectedSchools]);
+  }, [filters?.selectedPoints]);
 
   return (
     <div className={styles.App}>
+      {isLoading && <div className={styles.loading}>Loading data please wait...</div>}
       <h1>Analysis Chart</h1>
       <h3>Number of lessons</h3>
       <div className={styles.drobdownsContainer}>
-        {data?.length && filters?.camps?.length && (
+        {data?.length && filters?.countries?.length && (
           <>
             <div className={styles.drobdownWrapper}>
               Countries:
               <Drobdown
                 list={filters?.countries}
-                selectedItem={filters?.countries[0]}
-                setSelectedItem={setSelectedCountry}
+                selectedItem={filters?.selectedCountry || filters?.countries[0]}
+                setSelectedItem={(value: any) =>
+                  dispatchValues(UPDATEDDATA, {
+                    ...filters,
+                    selectedCountry: value,
+                  })
+                }
               />
             </div>
 
@@ -311,8 +309,13 @@ function Home() {
               Camps:
               <Drobdown
                 list={filters?.camps}
-                selectedItem={filters?.camps[0]}
-                setSelectedItem={setSelectedCamp}
+                selectedItem={filters?.selectedCamp || filters?.camps[0]}
+                setSelectedItem={(value: any) =>
+                  dispatchValues(UPDATEDDATA, {
+                    ...filters,
+                    selectedCamp: value,
+                  })
+                }
               />
             </div>
 
@@ -320,8 +323,13 @@ function Home() {
               School:
               <Drobdown
                 list={filters?.schools}
-                selectedItem={filters?.schools[0]}
-                setSelectedItem={setSelectedSchool}
+                selectedItem={filters?.selectedSchool || "show all"}
+                setSelectedItem={(value: any) =>
+                  dispatchValues(UPDATEDDATA, {
+                    ...filters,
+                    selectedSchool: value,
+                  })
+                }
               />
             </div>
           </>
@@ -335,12 +343,12 @@ function Home() {
                 onClick: function (event: any, elem: any) {
                   let clickedPoint = data.filter((item: any) => {
                     return (
-                      item.month === labels[elem[0].index] &&
+                      item.month === labels[elem[0]?.index] &&
                       item.school ===
-                        chartData?.datasets[elem[0].datasetIndex].label &&
+                        chartData?.datasets[elem[0]?.datasetIndex].label &&
                       item.lessons ===
-                        chartData?.datasets[elem[0].datasetIndex].data[
-                          elem[0].index
+                        chartData?.datasets[elem[0]?.datasetIndex].data[
+                          elem[0]?.index
                         ]
                     );
                   });
@@ -348,7 +356,11 @@ function Home() {
                     "point",
                     JSON.stringify(clickedPoint[0])
                   );
-                  setSelectedPoint(clickedPoint);
+                  dispatchValues(UPDATEDDATA, {
+                    ...filters,
+                    points: filters?.points,
+                    selectedChartPoint: clickedPoint[0],
+                  });
                   navigate("/details");
                 },
                 plugins: {
@@ -367,8 +379,8 @@ function Home() {
         </div>
         <div className={styles.sideData}>
           <div className={styles.totalLessons}>
-            <span>{totalLessons}</span> lessons <br />
-            in {selectedCamp}
+            <span>{filters?.totalLessons}</span> lessons <br />
+            in {filters?.selectedCamp}
           </div>
 
           <div className={styles.lessonsContainer}>
