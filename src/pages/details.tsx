@@ -22,7 +22,9 @@ function Details() {
       <p>point school: {details.school}</p>
       <p>point country: {details.country}</p>
       <p>point lessons: {details.lessons}</p>
-      <button><Link to={"/"} >Return</Link></button>
+      <button>
+        <Link to={"/"}>Return</Link>
+      </button>
     </div>
   );
 }

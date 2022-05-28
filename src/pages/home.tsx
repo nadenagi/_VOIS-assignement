@@ -107,7 +107,7 @@ function Home() {
       .get(url)
       .then((res: any) => {
         if (res?.data) {
-          dispatchValues(INITIALDATA, res.data,false);
+          dispatchValues(INITIALDATA, res.data, false);
         }
       })
       .catch((err: any) => {
@@ -151,11 +151,10 @@ function Home() {
     dispatch({ type, data, isLoading, error });
   }
 
-  useEffect(() => updateDataset(), [
-    filters?.selectedCountry,
-    filters?.selectedCamp,
-    filters?.selectedSchool,
-  ]);
+  useEffect(
+    () => updateDataset(),
+    [filters?.selectedCountry, filters?.selectedCamp, filters?.selectedSchool]
+  );
 
   const updateDataset = () => {
     const countriesList = [
@@ -286,7 +285,9 @@ function Home() {
 
   return (
     <div className={styles.App}>
-      {isLoading && <div className={styles.loading}>Loading data please wait...</div>}
+      {isLoading && (
+        <div className={styles.loading}>Loading data please wait...</div>
+      )}
       <h1>Analysis Chart</h1>
       <h3>Number of lessons</h3>
       <div className={styles.drobdownsContainer}>

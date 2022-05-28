@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDom from 'react-dom';
+import ReactDom from "react-dom";
 import { render, screen } from "@testing-library/react";
 import Drobdown from "../dropdown";
 
@@ -9,7 +9,10 @@ import Drobdown from "../dropdown";
 //   expect(linkElement).toBeInTheDocument();
 // });
 
-it("renders without crashing" , () =>{
-  const div = document.createElement('div')
-  ReactDom.render(<Drobdown list={[]} selectedItem={""} setSelectedItem={""} />, div);
-})
+it("renders without crashing", () => {
+  const div = document.createElement("div");
+  ReactDom.render(
+    <Drobdown list={[]} selectedItem={""} setSelectedItem={""} />,
+    div
+  );
+});

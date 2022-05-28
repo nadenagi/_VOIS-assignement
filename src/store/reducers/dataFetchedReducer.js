@@ -1,13 +1,16 @@
 import { fetchChartData } from "../actions/initialDataSetting";
-import { BEFOREINITIALDATA,INITIALDATA } from '../types/chart';
+import { BEFOREINITIALDATA, INITIALDATA } from "../types/chart";
 
 export const initialState = {
   data: [],
   isLoading: false,
-  error: false
+  error: false,
 };
 
-export const dataFetchedReducer = (state = initialState, action = fetchChartData) => {
+export const dataFetchedReducer = (
+  state = initialState,
+  action = fetchChartData
+) => {
   switch (action.type) {
     case INITIALDATA:
       return {

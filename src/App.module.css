@@ -34,7 +34,7 @@ h3 {
   color: var(--header-text-color);
 }
 
-.loading{
+.loading {
   position: fixed;
   top: 0;
   left: 0;
@@ -43,14 +43,14 @@ h3 {
   background: var(--text-color);
 }
 
-.drobdownsContainer{
+.drobdownsContainer {
   width: 100%;
   display: flex;
   gap: 2rem;
   margin-bottom: 1rem;
 }
 
-.drobdownWrapper{
+.drobdownWrapper {
   display: flex;
   justify-content: center;
   align-items: center;

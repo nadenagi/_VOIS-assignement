@@ -1,10 +1,10 @@
 import { initFilter } from "../actions/filterAction";
-import { INITIALDATA,UPDATEDDATA } from '../types/filter';
+import { INITIALDATA, UPDATEDDATA } from "../types/filter";
 
 export const initialState = {
   data: [],
   isLoading: false,
-  error: false
+  error: false,
 };
 
 export const dropdownReducer = (state = initialState, action = initFilter) => {
@@ -15,14 +15,14 @@ export const dropdownReducer = (state = initialState, action = initFilter) => {
         isLoading: action.isLoading,
         error: action.error,
       };
-    
-    case UPDATEDDATA:{console.log(action)
+
+    case UPDATEDDATA:
       return {
         data: action.data,
         isLoading: action.isLoading,
         error: action.error,
-      };}
-    
+      };
+
     default:
       return state;
   }
